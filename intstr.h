@@ -122,3 +122,15 @@ std::string strdiv(std::string a,std::string b){
     }
     return strip_0s(r);
 }
+
+std::string strmod(std::string a,std::string b){
+    std::string r,d,rem;
+    int i,n=a.length();
+    for (i=0;i<a.length();i++){
+        d=strdivb1d(strip_0s(rem+a[i]),b);
+        r+=d;
+        rem=strsub(strip_0s(rem+a[i]),strmul(d,b));
+        //cout << rem << endl;
+    }
+    return strip_0s(rem);
+}
