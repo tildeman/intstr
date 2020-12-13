@@ -20,6 +20,7 @@ Integer operations on C++ strings (for dummies)
 ## Utility functions
 * strcmp_u(std::string a,std::string b) : compares 2 integer strings (unsigned)
 * reduce_sign(std::string n): returns the shortest sign representation of number (e.g.: ++--+--+47 -> 47)
+* sign_check(std::string n): Checks whether given number is negative, zero or positive.
 * to_str(int n) : works identically to std::string::to_string
 # Credits
 Just some credits to the C++ library.
