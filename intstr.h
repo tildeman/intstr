@@ -66,7 +66,7 @@ _cxxstr strip_0s(_cxxstr n){
 
 // Unsigned functions
 
-int strcmp_u(_cxxstr a,_cxxstr b){
+int strcmpr_u(_cxxstr a,_cxxstr b){
     a=strip_0s_u(a);
     b=strip_0s_u(b);
     if (a.length()>b.length()) return -1;
@@ -74,6 +74,20 @@ int strcmp_u(_cxxstr a,_cxxstr b){
     for (int i=0;i<a.length();i++){
         if (a[i]>b[i]) return -1;
         if (a[i]<b[i]) return  1;
+    }
+    return 0;
+}
+
+int strcmpr(_cxxstr a,_cxxstr b){
+    a=reduce_sign(a);
+    b=reduce_sign(b);
+    if (sign_check(a)>=0 and sign_check(b)>=0) return strcmpr_u(a,b);
+    else if (sign_check(a)>=0 and sign_check(b)<0) return -1;
+    else if (sign_check(a)<0 and sign_check(b)>=0) return 1;
+    else if (sign_check(a)>=0 and sign_check(b)>=0){
+        a.erase(0,1);
+        b.erase(0,1);
+        return strcmpr(b,a);
     }
     return 0;
 }
@@ -107,7 +121,7 @@ _cxxstr strsub_u(_cxxstr a, _cxxstr b){
     _cxxstr c,t;
     char res;
     int i,j,carry=0;
-    if (strcmp_u(a,b)==1) return '-'+strsub_u(b,a);
+    if (strcmpr_u(a,b)==1) return '-'+strsub_u(b,a);
     for (i=b.length();i<a.length();i++){
         b='0'+b;
     }
@@ -148,15 +162,15 @@ _cxxstr strmul_u(_cxxstr a,_cxxstr b){
 }
 
 _cxxstr strdivb1d(_cxxstr a,_cxxstr b){
-    if (strcmp_u(a,b)==1) return "0";
+    if (strcmpr_u(a,b)==1) return "0";
     for (int i=1;i<10;i++){
-        if (strcmp_u(a,strmul_u(b,to_str(i)))==1) return to_str(i-1);
+        if (strcmpr_u(a,strmul_u(b,to_str(i)))==1) return to_str(i-1);
     }
     return "9";
 }
 
 _cxxstr strdiv_u(_cxxstr a,_cxxstr b){
-    if (strcmp_u(a,b)==1) return "0";
+    if (strcmpr_u(a,b)==1) return "0";
     _cxxstr r,d,rem;
     int i,n=a.length();
     for (i=0;i<a.length();i++){
